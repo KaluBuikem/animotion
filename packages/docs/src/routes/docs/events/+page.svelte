@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Animotion, Slide, Vertical } from '$lib/animotion'
-	import { navigation } from '$lib/animotion/stores/navigation'
+	import { Animotion, Slide, Step } from '$lib/animotion'
 	import CodeBlock from '$lib/components/code.svelte'
 
 	export let data
@@ -11,48 +10,21 @@
 <h2>Custom Events</h2>
 
 <p>
-	Because slides are already in the DOM, you can't rely on
-	component lifecycle methods to trigger actions but you can use <b>events</b>.
+	<b>Animotion</b> provides <code>on:in</code> and <code>on:out</code> events for the
+	<code>&lt;Slide&gt;</code>
+	and <code>&lt;Step&gt;</code> components if you want to use JavaScript to trigger some behaviour.
 </p>
 
-<p>
-	<b>Animotion</b> provides <code>on:in</code> and <code>on:out</code> events on the slide
-	if you want to run some code when a slide enters or leaves the viewport.
-</p>
-
-<Animotion options={{ hash: true, history: true }}>
+<Animotion>
 	<Slide>
 		<p class="text-[100px] font-semibold">Events</p>
 	</Slide>
 
-	<Slide on:in={() => alert('in')} on:out={() => alert('out')}>
-		<p class="text-[100px] font-semibold">Horizontal</p>
-	</Slide>
+	<Slide on:in={() => alert('slide in')} on:out={() => alert('slide out')}>
+		<p class="text-[100px] font-semibold">Slide</p>
 
-	<Vertical>
-		<Slide on:in={() => alert('in')} on:out={() => alert('out')}>
-			<p class="text-[100px] font-semibold">Vertical</p>
-		</Slide>
-	</Vertical>
+		<Step on:in={() => alert('step in')} on:out={() => alert('step out')}>Step</Step>
+	</Slide>
 </Animotion>
 
 <CodeBlock code={data.examples[0]} />
-
-<h2>Navigation store</h2>
-
-<p>
-	<b>Animotion</b> uses a navigation store to know which slide you're on with additional information
-	about the current slide which you can subscribe to inside of a component if you want.
-</p>
-
-<CodeBlock code={data.examples[1]} />
-
-<p>
-	Try changing the slides in the previous example to see the navigation store update for the page.
-</p>
-
-{#key $navigation}
-	<pre class="surface-1">
-{JSON.stringify($navigation, null, 2)}
-	</pre>
-{/key}

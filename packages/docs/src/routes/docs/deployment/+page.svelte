@@ -1,9 +1,8 @@
 <h1>Deployment</h1>
 
 <p>
-	The project uses <a href="https://vitejs.dev/">Vite</a> and you can
-	<a href="https://vitejs.dev/guide/static-deploy.html">deploy a static site</a> anywhere. You can read
-	one of these guides in the Vite docs:
+	You can <a href="https://vitejs.dev/guide/static-deploy.html">read the Vite deployment docs</a> to
+	learn how to deploy your presentation to any of these target platforms:
 </p>
 
 <ul>

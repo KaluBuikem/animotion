@@ -1,29 +1,22 @@
 <script lang="ts">
-	import { tweened } from 'svelte/motion'
-	import { quadInOut } from 'svelte/easing'
-
 	import { Animotion, Slide, Vertical } from '$lib/animotion'
 	import Code from '$lib/components/code.svelte'
+	import { signal } from '$lib/motion'
 
 	export let data
 
-	let progress = tweened(0, { duration: 1500, easing: quadInOut })
+	let progress = signal(0)
 	let done = false
 
-	progress.subscribe((value) => {
-		if (value === 10_000) {
-			done = true
+	async function animate() {
+		await progress.to(10_000, { delay: 1000 })
+		done = true
+		await progress.to(0, { duration: 100, delay: 1000 })
+		done = false
+		animate()
+	}
 
-			setTimeout(() => {
-				progress.set(0, { duration: 0 })
-			}, 2000)
-		}
-
-		if (value === 0) {
-			done = false
-			setTimeout(() => progress.set(10_000), 1000)
-		}
-	})
+	animate()
 </script>
 
 <h1>Creating slides</h1>
@@ -31,8 +24,8 @@
 <h2>Slide away</h2>
 
 <p>
-	You can write your entire presentation inside <code>src/slides.svelte</code> but you can also break
-	slides into components you can learn more about in another section.
+	You can write the entire presentation inside <code>src/slides.svelte</code> but you can also break
+	slides into components.
 </p>
 
 <Animotion>
@@ -53,7 +46,8 @@
 <Code code={data.examples[0]} />
 
 <p>
-	Because <b>Animotion</b> is a wrapper around Reveal.js these examples are the same which means you can customize <b>Animotion</b> beyond what it can do.
+	Because <b>Animotion</b> is a wrapper around Reveal.js these examples are the same which means you
+	can customize <b>Animotion</b> beyond what it can do.
 </p>
 
 <Code code={data.examples[1]} />
@@ -104,8 +98,7 @@
 <p>
 	These are the slide props you can pass to the <code>&lt;Slide&gt;</code> component. Some options
 	for things like
-	<a href="/docs/auto-animate">auto-animate</a> have their dedicated section you can learn more
-	about.
+	<a href="/docs/auto-animate">auto-animate</a> have their dedicated section you can learn more about.
 </p>
 
 <table>

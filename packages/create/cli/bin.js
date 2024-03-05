@@ -5,15 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import util from 'node:util'
 import { fileURLToPath } from 'node:url'
-import {
-	cancel,
-	confirm,
-	intro,
-	isCancel,
-	outro,
-	spinner,
-	text,
-} from '@clack/prompts'
+import { cancel, confirm, intro, isCancel, outro, spinner, text } from '@clack/prompts'
 
 const execSync = util.promisify(exec)
 
@@ -72,6 +64,13 @@ async function main() {
 
 	// copy the template
 	await copy('../template', cwd)
+
+	// npm ignores `.gitignore` so rename it
+	fs.renameSync(
+		path.join(cwd, 'ignore'),
+		path.join(cwd, '.gitignore'),
+		(error) => error && console.log(error)
+	)
 
 	if (dependencies) {
 		const s = spinner()

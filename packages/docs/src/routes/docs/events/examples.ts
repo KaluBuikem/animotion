@@ -6,34 +6,26 @@ const example1 = await highlightCode(`
 </script>
 
 <Presentation>
-  <Slide
-    on:in={() => console.log('in')}
-    on:out={() => console.log('out')}
-  >
-    Horizontal
+  <Slide>
+    <p class="text-[100px] font-semibold">Events</p>
   </Slide>
 
-  <Vertical>
-    <Slide
-      on:in={() => console.log('in')}
-      on:out={() => console.log('out')}
+  <Slide
+    on:in={() => alert('slide in')}
+    on:out={() => alert('slide out')}
+  >
+    <p class="text-[100px] font-semibold">Slide</p>
+
+    <Step
+      on:in={() => alert('step in')}
+      on:out={() => alert('step out')}
     >
-      Vertical
-    </Slide>
-  </Vertical>
+      Step
+    </Step>
+  </Slide>
 </Presentation>
 `.trim(), 'svelte')
 
-const example2 = await highlightCode(`
-<script>
-  import { navigation } from '@stores/navigation'
-</script>
-
-<pre>
-  {JSON.stringify($navigation, null, 2)}
-</pre>
-`.trim(), 'svelte')
-
-const examples = [example1, example2]
+const examples = [example1]
 
 export default examples
